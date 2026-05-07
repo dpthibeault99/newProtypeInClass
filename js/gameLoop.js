@@ -23,6 +23,11 @@ for(var i = 0; i < amount ; i++)
 
 }
 
+// function rand (low,high)
+// {
+//     return Math.random() * ( high - low ) + low;
+// }
+
 function animate()
 {
     context.clearRect(0,0,canvas.width, canvas.height);
