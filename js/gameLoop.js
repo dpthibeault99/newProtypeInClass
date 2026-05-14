@@ -5,34 +5,61 @@ var context = canvas.getContext("2d");
 var interval = 1000/60;
 var timer = setInterval(animate,interval);
 
-var colors = [];
-colors[0] = "#ff0000"
-colors[1] = "#00ff00"
-colors[2] = "#0000ff"
 
-var amount = 50;
+player = new gameObject();
+player.force = 1;
 
-var dots = [];
-for(var i = 0; i < amount ; i++)
-{
-    dots[i] = new gameObject();
-    dots[i].x = Math.random() * canvas.width; 
-    dots[i].y = Math.random() * canvas.height; 
-    dots[i].color = colors[Math.floor(rand(0,2.9))];
-    dots[i].width = rand(5,20);
+follower = new gameObject();
+follower.x =20;
+follower.y = 20;
+follower.color = "#ff0000";
 
-}
 
-// function rand (low,high)
-// {
-//     return Math.random() * ( high - low ) + low;
-// }
 
 function animate()
 {
     context.clearRect(0,0,canvas.width, canvas.height);
-    for(i=0; i < amount; i++)
+   
+    angularMovement();
+    player.drawTriangle();
+    follower.drawTriangle();
+
+}
+function angularMovement()
+{ 
+    follower.angle +=2; // infinate spins
+
+    if (w)
     {
-        dots[i].drawCircle();
+        var radians = player.angle + Math.PI / 180;
+
+        player.ax = Math.cos(radians);
+        player.ay = Math.sin(radians);
+
+        player.vx += player.ax * player.force;
+        player.vy += player.ay * player.force;
     }
+
+    if (s)
+    {
+        var radians = player.angle + Math.PI / 180;
+
+        player.ax = Math.cos(radians);
+        player.ay = Math.sin(radians);
+
+        player.vx += player.ax * -player.force;
+        player.vy += player.ay * -player.force;
+    }
+
+
+    if(a)
+    {
+        player.angle -=2;
+    }
+    if(d)
+    {
+        player.angle +=2;
+    }
+
+    player.move();
 }
