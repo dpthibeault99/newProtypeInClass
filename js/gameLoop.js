@@ -27,7 +27,8 @@ function animate()
     angularMovement();
     player.drawTriangle();
     follower.drawTriangle();
-        point();
+    point();
+    follow();
 
 
 }
@@ -84,5 +85,16 @@ function point() // in game compass?
 }
 function follow()
 {
-    
+    var dx = player.x - follower.x;
+    var dy = player.y - follower.y;
+
+    var radians = Math.atan2(dy,dx);
+
+    follower.vx = Math.cos(radians) * follower.force;
+    follower.vy = Math.sin(radians) * follower.force;
+
+    follower.x +=follower.vx * 2;
+    follower.y +=follower.vy * 2;
+
+
 }
