@@ -5,6 +5,9 @@ var context = canvas.getContext("2d");
 var interval = 1000/60;
 var timer = setInterval(animate,interval);
 
+var fx = .90;
+var fy = .90;
+
 
 player = new gameObject();
 player.force = 1;
@@ -13,6 +16,7 @@ follower = new gameObject();
 follower.x =20;
 follower.y = 20;
 follower.color = "#ff0000";
+follower.force = 1;
 
 
 
@@ -23,11 +27,13 @@ function animate()
     angularMovement();
     player.drawTriangle();
     follower.drawTriangle();
+        point();
+
 
 }
 function angularMovement()
 { 
-    follower.angle +=2; // infinate spins
+    // follower.angle +=2; // infinate spins
 
     if (w)
     {
@@ -60,6 +66,23 @@ function angularMovement()
     {
         player.angle +=2;
     }
+    player.vx *=fx
+    player.vy *=fy
+
 
     player.move();
+}
+
+function point() // in game compass?
+{
+    var dx = player.x - follower.x;
+    var dy = player.y - follower.y;
+
+    var radians = Math.atan2(dy,dx);
+    follower.angle = radians * 180/Math.PI;
+
+}
+function follow()
+{
+    
 }
